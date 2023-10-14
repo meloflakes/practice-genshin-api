@@ -56,14 +56,14 @@ public class GenshinControllerImpl implements IGenshinController {
         userService.deleteUser(uid);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleException(Exception ex) {
-        if (ex instanceof IllegalArgumentException || ex instanceof ValidationException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request.");
-        } else if (ex instanceof ResourceNotFoundException) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An internal server error occurred.");
-        }
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Object> handleException(Exception ex) {
+//        if (ex instanceof IllegalArgumentException || ex instanceof ValidationException) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request.");
+//        } else if (ex instanceof ResourceNotFoundException) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        } else {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An internal server error occurred.");
+//        }
+//    }
 }

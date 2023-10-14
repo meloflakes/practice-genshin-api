@@ -29,11 +29,6 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<UsersDTO> getAllUsers() {
-        return usersRepository.findAll();
-    }
-
-    @Override
     public UsersDTO getUser(Integer uid) {
 
         logger.info("Get account of UID: " + uid);
@@ -43,6 +38,14 @@ public class UserServiceImpl implements IUserService {
 
         logger.info("UID " + uid + " account is: " + usersDTO);
         return usersDTO;
+    }
+
+    @Override
+    public List<UsersDTO> getAllUsers() {
+
+        List<UsersDTO> usersDTOList = usersRepository.findAll();
+
+        return usersDTOList;
     }
 
     @Override
@@ -63,15 +66,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void deleteUser(Integer uid){
-        throw404IfNull(uid.longValue());
-        usersRepository.deleteById(uid.longValue());
-    }
-
-    @Override
     public UsersDTO updateUserLoginDate(Integer uid){
-
-        throw404IfNull(uid.longValue());
 
         UsersDTO usersDTO = getUser(uid);
         usersDTO.setLast_login_date(LocalDate.now());
@@ -84,13 +79,18 @@ public class UserServiceImpl implements IUserService {
             throw new RuntimeException("Unable to save data");
         }
 
-        return getUser(uid);
+        return usersDTO;
+    }
 
+    @Override
+    public void deleteUser(Integer uid){
+        throw404IfNull(uid.longValue());
+        usersRepository.deleteById(uid.longValue());
     }
 
     private void throw404IfNull(Long uid){
         if (!usersRepository.existsById(uid)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
     }
 }
